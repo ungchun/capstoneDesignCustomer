@@ -42,6 +42,7 @@ class _HomeImagesBodyState extends State<HomeImagesBody> {
                   activeColor: Colors.black,
                   color: Colors.blueGrey[200])),
           itemCount: imgList.length,
+          onTap: (int index) => print("$index ontap"),
           itemBuilder: (BuildContext context, int index) {
             return Column(
               children: [

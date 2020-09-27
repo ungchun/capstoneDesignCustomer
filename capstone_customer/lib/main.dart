@@ -28,9 +28,9 @@ class _MyHomePageState extends State<MyHomePage> {
 
   final List<Widget> _bottomWidgetList = [
     HomeWidget(),
-    MyinfoWidget(),
     OrderlistWidget(),
     QrWidget(),
+    MyinfoWidget(),
   ];
 
   Widget getBottomBar() {
@@ -52,17 +52,17 @@ class _MyHomePageState extends State<MyHomePage> {
           title: Text('홈'),
         ),
         BottomNavigationBarItem(
-          icon: Icon(Icons.shopping_cart,
+          icon: Icon(Icons.list,
               color: _bottombarindex == 1 ? Colors.pink : Colors.black),
           title: Text('주문내역'),
         ),
         BottomNavigationBarItem(
-          icon: Icon(Icons.list,
+          icon: Icon(Icons.apps,
               color: _bottombarindex == 2 ? Colors.pink : Colors.black),
           title: Text('QR'),
         ),
         BottomNavigationBarItem(
-          icon: Icon(Icons.notifications_none,
+          icon: Icon(Icons.account_circle,
               color: _bottombarindex == 3 ? Colors.pink : Colors.black),
           title: Text('내정보'),
         ),
