@@ -1,3 +1,4 @@
+import 'package:capstone_customer/cafeinfo/cafeinfoWidget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_swiper/flutter_swiper.dart';
 
@@ -42,7 +43,10 @@ class _HomeImagesBodyState extends State<HomeImagesBody> {
                   activeColor: Colors.black,
                   color: Colors.blueGrey[200])),
           itemCount: imgList.length,
-          onTap: (int index) => print("$index ontap"),
+          onTap: (int index) => {
+            Navigator.push(context,
+                MaterialPageRoute(builder: (context) => CafeinfoWidget()))
+          },
           itemBuilder: (BuildContext context, int index) {
             return Column(
               children: [
