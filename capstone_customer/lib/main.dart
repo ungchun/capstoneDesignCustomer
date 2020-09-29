@@ -1,10 +1,18 @@
 import 'package:capstone_customer/qr/qrWidget.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'home/homeWidget.dart';
 import 'myinfo/myinfoWidget.dart';
 import 'orderlist/orderlistWidget.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 
-void main() {
+// void main(){
+//   runApp(MyApp());
+// }
+
+Future<void> main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp();
   runApp(MyApp());
 }
 

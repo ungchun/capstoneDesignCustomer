@@ -19,7 +19,7 @@ class OrderlistWidgetState extends State<OrderlistWidget> {
           backgroundColor: Colors.white,
         ),
         body: ListView.builder(
-          itemCount: 3,
+          itemCount: 1,
           itemBuilder: (BuildContext context, int index) {
             // 나중에 db count 값 넘기고, index 0 인 부분만 divider 하나 더 추가하기
             return OrderListItem();
