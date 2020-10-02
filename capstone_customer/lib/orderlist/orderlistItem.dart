@@ -1,4 +1,5 @@
 import 'package:capstone_customer/cafeinfo/cafeinfoWidget.dart';
+import 'package:capstone_customer/orderlist/orderlistDetailInfo.dart';
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
@@ -8,14 +9,13 @@ class OrderListItem extends StatefulWidget {
 }
 
 class _OrderListItemState extends State<OrderListItem> {
- 
   // firestore 데이터 읽어오기 test
   FirebaseFirestore firestore = FirebaseFirestore.instance;
   void test() {
     String title = "";
     firestore.collection("test").doc("1").get().then((DocumentSnapshot ds) {
       title = ds.data()['name'];
-      print("asd "+title);
+      print("asd " + title);
     });
   }
 
@@ -66,7 +66,11 @@ class _OrderListItemState extends State<OrderListItem> {
               padding: const EdgeInsets.fromLTRB(0, 0, 10, 0),
               child: RaisedButton(
                 onPressed: () {
-                  test();
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => OrderlistDetailInfo()));
+                  // test();
                 },
                 child: Text("주문상세"),
               ),
