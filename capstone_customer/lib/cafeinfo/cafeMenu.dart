@@ -58,6 +58,7 @@ class _CafeMenuState extends State<CafeMenu> {
               return Card(
                 color: _headerindex == index ? Colors.black : Colors.white,
                 shape: RoundedRectangleBorder(
+                  side: BorderSide(style: BorderStyle.none),
                   borderRadius: BorderRadius.circular(15.0),
                 ),
                 child: InkWell(
@@ -73,6 +74,7 @@ class _CafeMenuState extends State<CafeMenu> {
                       child: Text(
                         _categoryItems[index],
                         textAlign: TextAlign.center,
+                        // textScaleFactor: 1,
                         style: TextStyle(
                           fontSize: 15,
                           color: _headerindex == index
