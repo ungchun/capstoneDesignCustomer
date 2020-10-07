@@ -7,7 +7,7 @@ class HomeText extends StatelessWidget {
       padding: const EdgeInsets.fromLTRB(0,60,230,0),
       child: Container(
         height: 40,
-        child: Text("테스트",style: TextStyle(fontSize: 28),),
+        child: Text("매장선택",style: TextStyle(fontSize: 28),),
       ),
     );
   }
