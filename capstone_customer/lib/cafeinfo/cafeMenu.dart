@@ -1,6 +1,14 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 
 class CafeMenu extends StatefulWidget {
+
+  final QueryDocumentSnapshot doc;
+  CafeMenu(this.doc);
+
+
+  
+
   @override
   _CafeMenuState createState() => _CafeMenuState();
 }
