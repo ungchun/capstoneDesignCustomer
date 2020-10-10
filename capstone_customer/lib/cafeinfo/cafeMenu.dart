@@ -2,18 +2,15 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 
 class CafeMenu extends StatefulWidget {
-
   final QueryDocumentSnapshot doc;
   CafeMenu(this.doc);
-
-
-  
 
   @override
   _CafeMenuState createState() => _CafeMenuState();
 }
 
 class _CafeMenuState extends State<CafeMenu> {
+  Stream stream;
   int _headerindex;
   List<String> _categoryItems;
 
@@ -34,18 +31,23 @@ class _CafeMenuState extends State<CafeMenu> {
       "기타",
     ];
 
-    // stream = FirebaseFirestore.instance
-    //     .collection('products')
-    //     .orderBy("uploadtime", descending: true)
-    //     .snapshots();
+    stream = FirebaseFirestore.instance
+        .collection('menu')
+        .where('cafeID', isEqualTo: widget.doc.data()['ID'])
+        .orderBy('category', descending: false) // true, false 내림차순 오름차순
+        .snapshots();
   }
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [
-        this.renderHeader(),
-      ],
+    return SingleChildScrollView(
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          this.renderHeader(),
+          this.renderBody(),
+        ],
+      ),
     );
   }
 
@@ -95,17 +97,20 @@ class _CafeMenuState extends State<CafeMenu> {
                   onTap: () {
                     setState(() {
                       _headerindex = index;
-                      // stream = _headerindex == 0
-                      //     ? FirebaseFirestore.instance
-                      //         .collection('products')
-                      //         .orderBy("uploadtime", descending: true)
-                      //         .snapshots()
-                      //     : FirebaseFirestore.instance
-                      //         .collection('products')
-                      //         .where("category",
-                      //             isEqualTo: _categoryItems[_headerindex])
-                      //         .orderBy("uploadtime", descending: true)
-                      //         .snapshots();
+                      stream = _headerindex == 0
+                          ? FirebaseFirestore.instance
+                              .collection('menu')
+                              .where('cafeID',
+                                  isEqualTo: widget.doc.data()['ID'])
+                              .orderBy('category', descending: false)
+                              .snapshots()
+                          : FirebaseFirestore.instance
+                              .collection('menu')
+                              .where('cafeID',
+                                  isEqualTo: widget.doc.data()['ID'])
+                              .where('category', isEqualTo: _categoryItems[index])
+                              .orderBy('이름', descending: false)
+                              .snapshots();
                     });
                   },
                 ),
@@ -116,5 +121,49 @@ class _CafeMenuState extends State<CafeMenu> {
         SizedBox(height: 5),
       ],
     );
+  }
+
+  Widget renderBody() {
+    return StreamBuilder<QuerySnapshot>(
+        stream: stream,
+        builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
+          if (snapshot.data == null)
+            return new Text('Error: ${snapshot.error}'); // 이거 안넣어주면 오류남
+          return ListView.builder(
+            shrinkWrap: true,
+            itemCount: snapshot.data.size,
+            itemBuilder: (context, index) {
+              return Row(
+                children: [
+                  Container(
+                    height: 100,
+                    width: 100,
+                    color: Colors.black,
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.all(15.0),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Padding(
+                          padding: const EdgeInsets.fromLTRB(0, 0, 0, 10),
+                          child: Text(snapshot.data.docs[index].data()['이름']),
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.fromLTRB(0, 0, 0, 10),
+                          child: Text(snapshot.data.docs[index].data()['영어이름']),
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.fromLTRB(0, 0, 0, 0),
+                          child: Text(snapshot.data.docs[index].data()['가격']),
+                        ),
+                      ],
+                    ),
+                  )
+                ],
+              );
+            },
+          );
+        });
   }
 }
