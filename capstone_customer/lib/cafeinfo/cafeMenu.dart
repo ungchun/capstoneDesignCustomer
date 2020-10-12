@@ -1,3 +1,4 @@
+import 'package:capstone_customer/order/orderWidget.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 
@@ -108,7 +109,8 @@ class _CafeMenuState extends State<CafeMenu> {
                               .collection('menu')
                               .where('cafeID',
                                   isEqualTo: widget.doc.data()['ID'])
-                              .where('category', isEqualTo: _categoryItems[index])
+                              .where('category',
+                                  isEqualTo: _categoryItems[index])
                               .orderBy('이름', descending: false)
                               .snapshots();
                     });
@@ -133,34 +135,41 @@ class _CafeMenuState extends State<CafeMenu> {
             shrinkWrap: true,
             itemCount: snapshot.data.size,
             itemBuilder: (context, index) {
-              return Row(
-                children: [
-                  Container(
-                    height: 100,
-                    width: 100,
-                    color: Colors.black,
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.all(15.0),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Padding(
-                          padding: const EdgeInsets.fromLTRB(0, 0, 0, 10),
-                          child: Text(snapshot.data.docs[index].data()['이름']),
-                        ),
-                        Padding(
-                          padding: const EdgeInsets.fromLTRB(0, 0, 0, 10),
-                          child: Text(snapshot.data.docs[index].data()['영어이름']),
-                        ),
-                        Padding(
-                          padding: const EdgeInsets.fromLTRB(0, 0, 0, 0),
-                          child: Text(snapshot.data.docs[index].data()['가격']),
-                        ),
-                      ],
+              return GestureDetector(
+                onTap: ()=>{
+                  Navigator.push(context,
+                      MaterialPageRoute(builder: (context) => OrderWidget()))
+                },
+                child: Row(
+                  children: [
+                    Container(
+                      height: 100,
+                      width: 100,
+                      color: Colors.black,
                     ),
-                  )
-                ],
+                    Padding(
+                      padding: const EdgeInsets.all(15.0),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Padding(
+                            padding: const EdgeInsets.fromLTRB(0, 0, 0, 10),
+                            child: Text(snapshot.data.docs[index].data()['이름']),
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.fromLTRB(0, 0, 0, 10),
+                            child:
+                                Text(snapshot.data.docs[index].data()['영어이름']),
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.fromLTRB(0, 0, 0, 0),
+                            child: Text(snapshot.data.docs[index].data()['가격']),
+                          ),
+                        ],
+                      ),
+                    )
+                  ],
+                ),
               );
             },
           );
