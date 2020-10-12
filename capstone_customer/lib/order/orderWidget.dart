@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 
 class OrderWidget extends StatefulWidget {
@@ -15,10 +16,30 @@ class _OrderWidgetState extends State<OrderWidget> {
           color: Colors.black,
         ),
       ),
-      body: Center(
-        child: Container(
-          child: Text("order"),
-        ),
+      body: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Center(
+              child: RaisedButton(
+            onPressed: () {
+              FirebaseFirestore.instance
+                  .collection('order')
+                  .doc('2')
+                  .set({"orderName": "아메리카노", "온도": "Hot"});
+            },
+            child: Text("orderAdd"),
+          )),
+          Center(
+              child: RaisedButton(
+            onPressed: () {
+              FirebaseFirestore.instance
+                  .collection('order')
+                  .doc('2')
+                  .delete();
+            },
+            child: Text("orderDelete"),
+          )),
+        ],
       ),
     );
   }
