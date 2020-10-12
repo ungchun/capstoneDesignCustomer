@@ -21,7 +21,7 @@ class _QRCodeScannerState extends State<QRCodeScanner> {
         backgroundColor: Colors.white,
         body: Builder(
           builder: (BuildContext context) {
-            print(_output);
+            print(_output); // 콘솔창에 스캔 값 출력
             return Center(
               //정 가운데에 QR 스켄값 표시
               child: Text(_output, style: TextStyle(color: Colors.black)),
