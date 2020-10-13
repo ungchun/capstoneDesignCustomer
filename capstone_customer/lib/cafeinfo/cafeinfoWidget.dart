@@ -1,9 +1,15 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 
 import 'cafeDetailInfo.dart';
 import 'cafeMenu.dart';
 
 class CafeinfoWidget extends StatefulWidget {
+  
+  final QueryDocumentSnapshot doc;
+  CafeinfoWidget(this.doc);
+
+
   @override
   _CafeinfoWidgetState createState() => _CafeinfoWidgetState();
 }
@@ -36,7 +42,7 @@ class _CafeinfoWidgetState extends State<CafeinfoWidget> {
           ),
           backgroundColor: Colors.white,
           title: Text(
-            "카페이름",
+            "${widget.doc.data()['이름']}",
             style: TextStyle(color: Colors.black),
           ),
           leading: BackButton(
@@ -45,8 +51,8 @@ class _CafeinfoWidgetState extends State<CafeinfoWidget> {
         ),
         body: TabBarView(
           children: [
-            CafeMenu(),
-            CafeDetailInfo(),
+            CafeMenu(widget.doc),
+            CafeDetailInfo(widget.doc),
           ],
         ),
       ),

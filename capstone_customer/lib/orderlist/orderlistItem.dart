@@ -53,10 +53,11 @@ class _OrderListItemState extends State<OrderListItem> {
               padding: const EdgeInsets.fromLTRB(0, 0, 10, 0),
               child: RaisedButton(
                 onPressed: () {
-                  Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) => CafeinfoWidget()));
+                  // Navigator.push(
+                  //     context,
+                  //     MaterialPageRoute(
+                  //         builder: (context) => CafeinfoWidget())
+                  //         );
                   // print("가게보기 click");
                 },
                 child: Text("가게보기"),

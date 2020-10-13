@@ -1,3 +1,6 @@
+import 'package:capstone_customer/myinfo/myinfoAppSet.dart';
+import 'package:capstone_customer/myinfo/myinfoNotice.dart';
+import 'package:capstone_customer/myinfo/myinfoUseGuide.dart';
 import 'package:flutter/material.dart';
 
 class MyinfoWidget extends StatefulWidget {
@@ -70,7 +73,12 @@ class _MyinfoWidgetState extends State<MyinfoWidget> {
                     children: [
                       IconButton(
                         icon: Icon(Icons.notifications_none),
-                        onPressed: () {},
+                        onPressed: () {
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => MyinfoNotice()));
+                        },
                       ),
                       Text("공지사항"),
                     ],
@@ -79,16 +87,26 @@ class _MyinfoWidgetState extends State<MyinfoWidget> {
                     children: [
                       IconButton(
                         icon: Icon(Icons.check_circle),
-                        onPressed: () {},
+                        onPressed: () {
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => MyinfoUseGuide()));
+                        },
                       ),
-                      Text("인증"),
+                      Text("이용안내"),
                     ],
                   ),
                   Column(
                     children: [
                       IconButton(
                         icon: Icon(Icons.settings),
-                        onPressed: () {},
+                        onPressed: () {
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => MyinfoAppSet()));
+                        },
                       ),
                       Text("App 설정"),
                     ],
@@ -98,25 +116,6 @@ class _MyinfoWidgetState extends State<MyinfoWidget> {
             ),
             Padding(
               padding: const EdgeInsets.only(top: 30.0),
-              child: Padding(
-                padding: const EdgeInsets.fromLTRB(60, 10, 10, 0),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Text("???"),
-                    Padding(
-                      padding: const EdgeInsets.only(right: 35.0),
-                      child: IconButton(
-                        icon: Icon(Icons.keyboard_arrow_right),
-                        onPressed: () {},
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-            ),
-            Padding(
-              padding: const EdgeInsets.only(top: 0.0),
               child: Padding(
                 padding: const EdgeInsets.fromLTRB(60, 10, 10, 0),
                 child: Row(
@@ -141,7 +140,26 @@ class _MyinfoWidgetState extends State<MyinfoWidget> {
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    Text("약관 확인"),
+                    Text("약관확인"),
+                    Padding(
+                      padding: const EdgeInsets.only(right: 35.0),
+                      child: IconButton(
+                        icon: Icon(Icons.keyboard_arrow_right),
+                        onPressed: () {},
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.only(top: 0.0),
+              child: Padding(
+                padding: const EdgeInsets.fromLTRB(60, 10, 10, 0),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text("기타"),
                     Padding(
                       padding: const EdgeInsets.only(right: 35.0),
                       child: IconButton(
