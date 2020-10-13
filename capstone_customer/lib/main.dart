@@ -1,6 +1,7 @@
 import 'package:capstone_customer/qr/qrWidget.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'cafeinfo/cafeListViewModel.dart';
 import 'home/homeWidget.dart';
 import 'myinfo/myinfoWidget.dart';
 import 'orderlist/orderlistWidget.dart';
@@ -41,6 +42,12 @@ class _MyHomePageState extends State<MyHomePage> {
     QrWidget(),
     MyinfoWidget(),
   ];
+
+  @override
+  void initState() { 
+    super.initState();
+    
+  }
 
   Widget getBottomBar() {
     return BottomNavigationBar(
