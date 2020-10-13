@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:qrscan/qrscan.dart' as scanner;
-import 'dart:async';
+import 'dart:async'; // future async await
 
 class QRCodeScanner extends StatefulWidget {
   @override
@@ -38,6 +38,7 @@ class _QRCodeScannerState extends State<QRCodeScanner> {
     );
   }
 
+  // https://dart.dev/codelabs/async-await
   //비동기 함수
   Future _scan() async {
     //스캔 시작 - 이때 스캔 될때까지 blocking
