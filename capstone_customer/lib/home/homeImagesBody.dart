@@ -36,7 +36,7 @@ class _HomeImagesBodyState extends State<HomeImagesBody> {
     return StreamBuilder<QuerySnapshot>(
         stream: stream,
         builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
-          if (snapshot.data == null) return new Text('Error: ${snapshot.error}'); // 이거 안넣어주면 오류남
+          if (snapshot.data == null) return new Text(""); // 이거 안넣어주면 오류남
           return Padding(
             padding: const EdgeInsets.fromLTRB(50.0, 30, 50, 50),
             child: Container(

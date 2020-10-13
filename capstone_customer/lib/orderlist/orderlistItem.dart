@@ -4,6 +4,10 @@ import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 class OrderListItem extends StatefulWidget {
+
+  final QueryDocumentSnapshot doc;
+  OrderListItem(this.doc);
+
   @override
   _OrderListItemState createState() => _OrderListItemState();
 }
@@ -27,14 +31,14 @@ class _OrderListItemState extends State<OrderListItem> {
         Padding(
           padding: const EdgeInsets.fromLTRB(20, 10, 0, 0),
           child: Text(
-            "1분전",
+            "${widget.doc.data()['주문시간']}",
             style: TextStyle(color: Colors.grey, fontSize: 10),
           ),
         ),
         Padding(
           padding: const EdgeInsets.fromLTRB(20, 2, 0, 0),
           child: Text(
-            "공대카페",
+            "${widget.doc.data()['카페이름']}",
             style: TextStyle(
                 color: Colors.black, fontSize: 30, fontWeight: FontWeight.bold),
           ),
@@ -70,7 +74,7 @@ class _OrderListItemState extends State<OrderListItem> {
                   Navigator.push(
                       context,
                       MaterialPageRoute(
-                          builder: (context) => OrderlistDetailInfo()));
+                          builder: (context) => OrderlistDetailInfo(widget.doc)));
                   // test();
                 },
                 child: Text("주문상세"),
