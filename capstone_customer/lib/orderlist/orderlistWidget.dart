@@ -37,7 +37,7 @@ class OrderlistWidgetState extends State<OrderlistWidget> {
             builder:
                 (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
               if (snapshot.data == null)
-                return new Text(""); // 이거 안넣어주면 오류남
+                return Text(""); // 이거 안넣어주면 오류남
               return ListView.builder(
                 itemCount: snapshot.data.size,
                 itemBuilder: (BuildContext context, int index) {
