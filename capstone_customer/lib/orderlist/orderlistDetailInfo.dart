@@ -1,11 +1,31 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 
 class OrderlistDetailInfo extends StatefulWidget {
+  final QueryDocumentSnapshot doc;
+  OrderlistDetailInfo(this.doc);
+
   @override
   _OrderlistDetailInfoState createState() => _OrderlistDetailInfoState();
 }
 
 class _OrderlistDetailInfoState extends State<OrderlistDetailInfo> {
+  int menuSize;
+  int price = 0;
+  String tempPrice = "";
+
+  @override
+  void initState() {
+    super.initState();
+
+    menuSize = widget.doc.data()['menu'].length;
+
+    for(int i = 0; i<menuSize; i++){
+      tempPrice = widget.doc.data()['price'][i];
+      price += int.parse(tempPrice);
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -23,7 +43,7 @@ class _OrderlistDetailInfoState extends State<OrderlistDetailInfo> {
               Padding(
                 padding: const EdgeInsets.fromLTRB(30, 10, 10, 30),
                 child: Text(
-                  "공대카페",
+                  "${widget.doc.data()['카페이름']}",
                   style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
                 ),
               ),
@@ -36,9 +56,14 @@ class _OrderlistDetailInfoState extends State<OrderlistDetailInfo> {
               ),
               Padding(
                 padding: const EdgeInsets.fromLTRB(30, 5, 10, 10),
-                child: Text(
-                  "아메리카노, 카페라떼",
-                  style: TextStyle(fontSize: 20, color: Colors.grey),
+                child: Row(
+                  children: [
+                    for (int i = 0; i < menuSize; i++)
+                      Text(
+                        "${widget.doc.data()['menu'][i]}  ",
+                        style: TextStyle(fontSize: 20, color: Colors.grey),
+                      ),
+                  ],
                 ),
               ),
               Padding(
@@ -51,7 +76,7 @@ class _OrderlistDetailInfoState extends State<OrderlistDetailInfo> {
               Padding(
                 padding: const EdgeInsets.fromLTRB(30, 5, 10, 10),
                 child: Text(
-                  "13,000원",
+                  "$price 원",
                   style: TextStyle(fontSize: 20, color: Colors.grey),
                 ),
               ),

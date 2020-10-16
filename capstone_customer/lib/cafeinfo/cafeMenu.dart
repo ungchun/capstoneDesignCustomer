@@ -129,14 +129,13 @@ class _CafeMenuState extends State<CafeMenu> {
     return StreamBuilder<QuerySnapshot>(
         stream: stream,
         builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
-          if (snapshot.data == null)
-            return new Text('Error: ${snapshot.error}'); // 이거 안넣어주면 오류남
+          if (snapshot.data == null) return new Text(""); // 이거 안넣어주면 오류남
           return ListView.builder(
             shrinkWrap: true,
             itemCount: snapshot.data.size,
             itemBuilder: (context, index) {
               return GestureDetector(
-                onTap: ()=>{
+                onTap: () => {
                   Navigator.push(context,
                       MaterialPageRoute(builder: (context) => OrderWidget()))
                 },

@@ -20,11 +20,19 @@ dependencies:
   firebase_storage: ^4.0.0     # FireStorage
   google_maps_flutter:
   qrscan: ^0.2.17              # QR Code Scanner
+  moor_flutter: ^3.1.0
+  provider: ^4.3.2+2
   
 dev_dependencies:
   flutter_test:
     sdk: flutter
 
+  moor_generator: ^3.3.1
+  build_runner:
+# For information on the generic Dart part of this file, see the
+# following page: https://dart.dev/tools/pub/pubspec
+
+# The following section is specific to Flutter.
 flutter:
   uses-material-design: true
   assets:
