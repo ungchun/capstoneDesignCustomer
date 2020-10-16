@@ -136,7 +136,7 @@ class _CafeMenuState extends State<CafeMenu> {
             itemCount: snapshot.data.size,
             itemBuilder: (context, index) {
               return GestureDetector(
-                onTap: ()=>{
+                onTap: () => {
                   Navigator.push(context,
                       MaterialPageRoute(builder: (context) => OrderWidget()))
                 },

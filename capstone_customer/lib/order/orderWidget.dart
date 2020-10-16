@@ -7,6 +7,7 @@ class OrderWidget extends StatefulWidget {
 }
 
 class _OrderWidgetState extends State<OrderWidget> {
+  bool _checked = false;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -16,30 +17,108 @@ class _OrderWidgetState extends State<OrderWidget> {
           color: Colors.black,
         ),
       ),
-      body: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          Center(
-              child: RaisedButton(
-            onPressed: () {
-              FirebaseFirestore.instance
-                  .collection('order')
-                  .doc('2')
-                  .set({"orderName": "아메리카노", "온도": "Hot"});
-            },
-            child: Text("orderAdd"),
-          )),
-          Center(
-              child: RaisedButton(
-            onPressed: () {
-              FirebaseFirestore.instance
-                  .collection('order')
-                  .doc('2')
-                  .delete();
-            },
-            child: Text("orderDelete"),
-          )),
-        ],
+      body: Center(
+        child: Column(
+          //mainAxisSize: MainAxisSize.min,
+          //mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: <Widget>[
+            Padding(
+              padding: const EdgeInsets.fromLTRB(0, 0, 0, 0),
+              child: Container(
+                height: 150,
+                color: Colors.grey,
+              ),
+            ),
+            Padding(
+                padding: const EdgeInsets.fromLTRB(30, 5, 0, 0),
+                child: Text(
+                  "기본",
+                  style: TextStyle(fontWeight: FontWeight.bold, fontSize: 15),
+                )),
+            Padding(
+              padding: const EdgeInsets.fromLTRB(0, 0, 0, 0),
+              child: Container(
+                height: 100,
+                // color: Colors.white,
+              ),
+            ),
+            Padding(
+                padding: const EdgeInsets.fromLTRB(30, 5, 0, 0),
+                child: Text(
+                  "추가 선택",
+                  style: TextStyle(fontWeight: FontWeight.bold, fontSize: 15),
+                )),
+            Padding(
+                padding: const EdgeInsets.fromLTRB(0, 0, 15, 50),
+                child: CheckboxListTile(
+                    title: Text(
+                      "샷 추가",
+                      style: TextStyle(
+                        //fontWeight: FontWeight.bold,
+                        fontSize: 15,
+                        color: Colors.black,
+                      ),
+                    ),
+                    secondary: Text("+500원"),
+                    controlAffinity: ListTileControlAffinity.leading,
+                    value: _checked,
+                    onChanged: (bool value) {
+                      setState(() {
+                        _checked = value;
+                      });
+                    })),
+            Padding(
+                padding: const EdgeInsets.fromLTRB(30, 5, 0, 0),
+                child: Row(
+                  //mainAxisAlignment: MainAxisAlignment.center,
+                  // crossAxisAlignment: CrossAxisAlignment.stretch,
+                  children: <Widget>[
+                    Padding(
+                      padding: const EdgeInsets.fromLTRB(0, 10, 0, 0),
+                      child: Text(
+                        "수량",
+                        style: TextStyle(
+                            fontWeight: FontWeight.bold, fontSize: 15),
+                      ),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.fromLTRB(200, 5, 0, 0),
+                      child: Text(
+                        "1개",
+                        style: TextStyle(fontSize: 15),
+                      ),
+                    ),
+                  ],
+                )),
+            Padding(
+                padding: const EdgeInsets.fromLTRB(0, 0, 0, 0),
+                child: RaisedButton(
+                  color: Colors.blue,
+                  child: Text("1개 담기"),
+                  splashColor: Colors.red,
+                  disabledColor: Colors.cyanAccent,
+                  disabledTextColor: Colors.black,
+                  onPressed: () {},
+                  textColor: Colors.white,
+                )),
+          ],
+
+          /*
+        children: <Widget>[
+            Checkbox(
+              value: chechBoxValue,
+              onChanged: (bool value) {
+                print(value);
+
+                setState(() {
+                  chechBoxValue = value;
+                });
+              },
+            ),
+            Text("샷 추가")
+        ],*/
+        ),
       ),
     );
   }
