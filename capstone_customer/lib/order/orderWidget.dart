@@ -38,24 +38,25 @@ class _OrderWidgetState extends State<OrderWidget> {
               Center(
                   child: RaisedButton(
                 onPressed: () {
+                  // order add test
                   // debugPrint(snapshot.data.docs[2].data()['orderName']);
-                  FirebaseFirestore.instance
-                      .collection('order')
-                      .doc('2')
-                      .set({"orderName": "아메리카노", "온도": "Hot", "menu":["아메리카노","카페라떼"],"count":[1,2],"price":["4,300","3,500"]});
+                  // FirebaseFirestore.instance
+                  //     .collection('order')
+                  //     .doc('2')
+                  //     .set({"orderName": "아메리카노", "온도": "Hot", "menu":["아메리카노","카페라떼"],"count":[1,2],"price":["4,300","3,500"]});
                 },
-                child: Text("orderAdd"),
+                child: Text("cart in menu"),
               )),
-              Center(
-                  child: RaisedButton(
-                onPressed: () {
-                  FirebaseFirestore.instance
-                      .collection('order')
-                      .doc('2')
-                      .delete();
-                },
-                child: Text("orderDelete"),
-              )),
+              // Center(
+              //     child: RaisedButton(
+              //   onPressed: () {
+              //     FirebaseFirestore.instance
+              //         .collection('order')
+              //         .doc('2')
+              //         .delete();
+              //   },
+              //   child: Text("orderDelete"),
+              // )),
             ],
           );
         }
