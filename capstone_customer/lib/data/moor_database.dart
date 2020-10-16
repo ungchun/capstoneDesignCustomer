@@ -18,10 +18,15 @@ class AppDatabase extends _$AppDatabase {
   @override
   int get schemaVersion => 1;
 
-  Future<List<Order>> getAllProducts() => select(orders).get();
-  Stream<List<Order>> watchProducts() => select(orders).watch();
-  Future insertProduct(Order order) => into(orders).insert(order);
-  Future updateProduct(Order order) => update(orders).replace(order);
-  Future deleteProduct(Order order) => delete(orders).delete(order);
-  deleteAllProduct() => delete(orders).go();
+  Future<List<Order>> getAllOrders() => select(orders).get();
+  Stream<List<Order>> watchOrders() => select(orders).watch();
+  Future insertOrder(Order order) => into(orders).insert(order);
+  Future updateOrder(Order order) => update(orders).replace(order);
+  Future deleteOrder(Order order) => delete(orders).delete(order);
+  deleteAllOrder() => delete(orders).go();
+}
+
+AppDatabase moor;
+AppDatabase get getMoordb {
+  return moor ??= AppDatabase();
 }

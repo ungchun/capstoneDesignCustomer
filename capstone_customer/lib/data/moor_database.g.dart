@@ -8,10 +8,10 @@ part of 'moor_database.dart';
 
 // ignore_for_file: unnecessary_brace_in_string_interps, unnecessary_this
 class Order extends DataClass implements Insertable<Order> {
-  final String name;
-  final String price;
-  final String count;
-  final String cafeID;
+  String name;
+  String price;
+  String count;
+  String cafeID;
   Order(
       {@required this.name,
       @required this.price,

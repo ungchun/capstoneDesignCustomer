@@ -1,3 +1,5 @@
+import 'package:capstone_customer/data/moor_database.dart';
+import 'package:capstone_customer/order/orderWidget.dart';
 import 'package:flutter/material.dart';
 
 class OrderCart extends StatefulWidget {
@@ -6,6 +8,14 @@ class OrderCart extends StatefulWidget {
 }
 
 class _OrderCartState extends State<OrderCart> {
+  Order order = Order(cafeID: "1", count: "count 2", name: "아메리카노", price: "1000원");
+  Stream stream = getMoordb.watchOrders();
+
+  @override
+  void initState() {
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -90,13 +100,35 @@ class _OrderCartState extends State<OrderCart> {
                   ));
             },
           ),
+
+          // insert 잘 들어가는거 같은데 watch 하려면 streambuilder 써야하니까 값 넘겨받아서 test 한번 해보기
           SizedBox(
             width: double.infinity,
             height: 50,
             child: RaisedButton(
-              child: Text("주문하기"),
+              child: Text("moor db insert test"),
               onPressed: () {
-                
+                getMoordb.insertOrder(order);
+              },
+            ),
+          ),
+          SizedBox(
+            width: double.infinity,
+            height: 50,
+            child: RaisedButton(
+              child: Text("moor db delete test"),
+              onPressed: () {
+                getMoordb.deleteAllOrder();
+              },
+            ),
+          ),
+          SizedBox(
+            width: double.infinity,
+            height: 50,
+            child: RaisedButton(
+              child: Text("moor db watch test"),
+              onPressed: () {
+                print(stream);
               },
             ),
           )
