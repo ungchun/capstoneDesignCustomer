@@ -8,8 +8,6 @@ class OrderCart extends StatefulWidget {
 }
 
 class _OrderCartState extends State<OrderCart> {
-  Order order = Order(cafeID: "1", count: "count 2", name: "아메리카노", price: "1000원");
-  Stream stream = getMoordb.watchOrders();
 
   @override
   void initState() {
@@ -25,115 +23,136 @@ class _OrderCartState extends State<OrderCart> {
           color: Colors.black,
         ),
       ),
-      body: Column(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          ListView.builder(
-            shrinkWrap: true,
-            itemCount: 1,
-            itemBuilder: (context, index) {
-              return GestureDetector(
-                  onTap: () => {},
-                  child: Padding(
-                    padding: const EdgeInsets.fromLTRB(15, 15, 0, 0),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Padding(
-                              padding: const EdgeInsets.fromLTRB(10, 10, 0, 0),
-                              child: Container(
-                                child: Text("아이스 아메리카노",
-                                    style: TextStyle(
-                                        fontWeight: FontWeight.normal)),
-                              ),
-                            ),
-                            Padding(
-                              padding: const EdgeInsets.fromLTRB(0, 10, 10, 0),
-                              child: Container(
-                                child: Icon(Icons.close),
-                              ),
-                            )
-                          ],
-                        ),
-                        Padding(
-                          padding: const EdgeInsets.fromLTRB(10, 10, 0, 0),
-                          child: Text("기본 : 4300 원"),
-                        ),
-                        Padding(
-                          padding: const EdgeInsets.fromLTRB(10, 10, 0, 0),
-                          child: Row(
+      body: StreamBuilder<List<Order>>(
+          stream: getMoordb.watchOrders(),
+          builder: (BuildContext context, AsyncSnapshot<List<Order>> snapshot) {
+            if (snapshot.data == null) return new Text(""); // 이거 안넣어주면 오류남
+            return Column(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                ListView.builder(
+                  shrinkWrap: true,
+                  itemCount: snapshot.data.length,
+                  itemBuilder: (context, index) {
+                    return GestureDetector(
+                        // onTap: () => {
+                        //   debugPrint("order size + ${snapshot.data.length}")
+                        // },
+                        child: Padding(
+                      padding: const EdgeInsets.fromLTRB(15, 15, 0, 0),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
-                              Text(
-                                "4300 원",
-                                style: TextStyle(
-                                    fontWeight: FontWeight.bold, fontSize: 20),
+                              Padding(
+                                padding:
+                                    const EdgeInsets.fromLTRB(10, 10, 0, 0),
+                                child: Container(
+                                  child: Text("${snapshot.data[index].name}",
+                                      style: TextStyle(
+                                          fontWeight: FontWeight.normal)),
+                                ),
                               ),
                               Padding(
-                                padding: const EdgeInsets.fromLTRB(0, 0, 0, 0),
-                                child: Row(
-                                  children: [
-                                    IconButton(
-                                      icon: Icon(Icons.remove),
-                                      onPressed: () {},
-                                    ),
-                                    Padding(
-                                      padding:
-                                          const EdgeInsets.fromLTRB(5, 0, 5, 0),
-                                      child: Text("1개"),
-                                    ),
-                                    IconButton(
-                                      icon: Icon(Icons.add),
-                                      onPressed: () {},
-                                    ),
-                                  ],
+                                padding:
+                                    const EdgeInsets.fromLTRB(0, 10, 10, 0),
+                                child: Container(
+                                  child: IconButton(
+                                    icon: Icon(Icons.close),
+                                    onPressed: () {
+                                      // getMoordb.deleteAllOrder();
+                                      // debugPrint("${snapshot.data[index]}");
+
+                                      // sibal 여기 안됌 선택한 order를 삭제해야하는데 뭔가 오류남
+                                      Order order = snapshot.data[index];
+                                      getMoordb.deleteOrder(order);
+                                    },
+                                  ),
                                 ),
                               )
                             ],
                           ),
-                        ),
-                      ],
-                    ),
-                  ));
-            },
-          ),
+                          Padding(
+                            padding: const EdgeInsets.fromLTRB(10, 0, 0, 0),
+                            child: Text("기본 : ${snapshot.data[index].price} 원"),
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.fromLTRB(10, 10, 0, 0),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Text(
+                                  "${snapshot.data[index].price} 원",
+                                  style: TextStyle(
+                                      fontWeight: FontWeight.bold,
+                                      fontSize: 20),
+                                ),
+                                Padding(
+                                  padding:
+                                      const EdgeInsets.fromLTRB(0, 0, 0, 0),
+                                  child: Row(
+                                    children: [
+                                      IconButton(
+                                        icon: Icon(Icons.remove),
+                                        onPressed: () {},
+                                      ),
+                                      Padding(
+                                        padding: const EdgeInsets.fromLTRB(
+                                            5, 0, 5, 0),
+                                        child: Text("1개"),
+                                      ),
+                                      IconButton(
+                                        icon: Icon(Icons.add),
+                                        onPressed: () {},
+                                      ),
+                                    ],
+                                  ),
+                                )
+                              ],
+                            ),
+                          ),
+                        ],
+                      ),
+                    ));
+                  },
+                ),
 
-          // insert 잘 들어가는거 같은데 watch 하려면 streambuilder 써야하니까 값 넘겨받아서 test 한번 해보기
-          SizedBox(
-            width: double.infinity,
-            height: 50,
-            child: RaisedButton(
-              child: Text("moor db insert test"),
-              onPressed: () {
-                getMoordb.insertOrder(order);
-              },
-            ),
-          ),
-          SizedBox(
-            width: double.infinity,
-            height: 50,
-            child: RaisedButton(
-              child: Text("moor db delete test"),
-              onPressed: () {
-                getMoordb.deleteAllOrder();
-              },
-            ),
-          ),
-          SizedBox(
-            width: double.infinity,
-            height: 50,
-            child: RaisedButton(
-              child: Text("moor db watch test"),
-              onPressed: () {
-                print(stream);
-              },
-            ),
-          )
-        ],
-      ),
+                // insert 잘 들어가는거 같은데 watch 하려면 streambuilder 써야하니까 값 넘겨받아서 test 한번 해보기
+                // SizedBox(
+                //   width: double.infinity,
+                //   height: 50,
+                //   child: RaisedButton(
+                //     child: Text("moor db insert test"),
+                //     onPressed: () {
+                //       getMoordb.insertOrder(order);
+                //     },
+                //   ),
+                // ),
+                // SizedBox(
+                //   width: double.infinity,
+                //   height: 50,
+                //   child: RaisedButton(
+                //     child: Text("moor db delete test"),
+                //     onPressed: () {
+                //       getMoordb.deleteAllOrder();
+                //     },
+                //   ),
+                // ),
+                // SizedBox(
+                //   width: double.infinity,
+                //   height: 50,
+                //   child: RaisedButton(
+                //     child: Text("moor db watch test"),
+                //     onPressed: () {
+                //       print(stream);
+                //     },
+                //   ),
+                // )
+              ],
+            );
+          }),
     );
   }
 }

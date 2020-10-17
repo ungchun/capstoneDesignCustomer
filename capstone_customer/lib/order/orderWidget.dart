@@ -1,3 +1,4 @@
+import 'package:capstone_customer/data/moor_database.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 
@@ -8,6 +9,8 @@ class OrderWidget extends StatefulWidget {
 
 class _OrderWidgetState extends State<OrderWidget> {
   Stream stream;
+  // test
+  Order order = Order(cafeID: "1", count: "count 2", name: "아메리카노", price: "1000");
 
   @override
   void initState() {
@@ -32,12 +35,14 @@ class _OrderWidgetState extends State<OrderWidget> {
       body: StreamBuilder<QuerySnapshot>(
         stream: stream,
         builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
+          if (snapshot.data == null) return new Text(""); // 이거 안넣어주면 오류남
           return Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Center(
                   child: RaisedButton(
                 onPressed: () {
+                  getMoordb.insertOrder(order);
                   // order add test
                   // debugPrint(snapshot.data.docs[2].data()['orderName']);
                   // FirebaseFirestore.instance
