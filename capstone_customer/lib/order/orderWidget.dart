@@ -43,6 +43,10 @@ class _OrderWidgetState extends State<OrderWidget> {
                 // color: Colors.white,
               ),
             ),
+            Divider(
+              height: 3,
+              thickness: 1,
+            ),
             Padding(
                 padding: const EdgeInsets.fromLTRB(30, 5, 0, 0),
                 child: Text(
@@ -68,6 +72,10 @@ class _OrderWidgetState extends State<OrderWidget> {
                         _checked = value;
                       });
                     })),
+            Divider(
+              height: 3,
+              thickness: 1,
+            ),
             Padding(
                 padding: const EdgeInsets.fromLTRB(30, 5, 0, 0),
                 child: Row(
