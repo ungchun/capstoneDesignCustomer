@@ -23,6 +23,7 @@ class _OrderCartState extends State<OrderCart> {
           color: Colors.black,
         ),
       ),
+      
       body: StreamBuilder<List<Order>>(
           stream: getMoordb.watchOrders(),
           builder: (BuildContext context, AsyncSnapshot<List<Order>> snapshot) {
@@ -63,11 +64,10 @@ class _OrderCartState extends State<OrderCart> {
                                     icon: Icon(Icons.close),
                                     onPressed: () {
                                       // getMoordb.deleteAllOrder();
-                                      // debugPrint("${snapshot.data[index]}");
-
-                                      // sibal 여기 안됌 선택한 order를 삭제해야하는데 뭔가 오류남
-                                      Order order = snapshot.data[index];
-                                      getMoordb.deleteOrder(order);
+                                      debugPrint("${snapshot.data[index]}");
+                                      //Order order = snapshot.data[index];
+                                      
+                                      getMoordb.deleteOrder(snapshot.data[index]);
                                     },
                                   ),
                                 ),

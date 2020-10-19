@@ -10,7 +10,7 @@ class OrderWidget extends StatefulWidget {
 class _OrderWidgetState extends State<OrderWidget> {
   Stream stream;
   // test
-  Order order = Order(cafeID: "1", count: "count 2", name: "아메리카노", price: "1000");
+  Order order = Order(cafeID: 2, count: "count 2", name: "아메리카노", price: "1000");
 
   @override
   void initState() {

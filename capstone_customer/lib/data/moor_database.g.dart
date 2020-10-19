@@ -8,10 +8,10 @@ part of 'moor_database.dart';
 
 // ignore_for_file: unnecessary_brace_in_string_interps, unnecessary_this
 class Order extends DataClass implements Insertable<Order> {
-  String name;
-  String price;
-  String count;
-  String cafeID;
+  final String name;
+  final String price;
+  final String count;
+  final int cafeID;
   Order(
       {@required this.name,
       @required this.price,
@@ -21,14 +21,15 @@ class Order extends DataClass implements Insertable<Order> {
       {String prefix}) {
     final effectivePrefix = prefix ?? '';
     final stringType = db.typeSystem.forDartType<String>();
+    final intType = db.typeSystem.forDartType<int>();
     return Order(
       name: stringType.mapFromDatabaseResponse(data['${effectivePrefix}name']),
       price:
           stringType.mapFromDatabaseResponse(data['${effectivePrefix}price']),
       count:
           stringType.mapFromDatabaseResponse(data['${effectivePrefix}count']),
-      cafeID: stringType
-          .mapFromDatabaseResponse(data['${effectivePrefix}cafe_i_d']),
+      cafeID:
+          intType.mapFromDatabaseResponse(data['${effectivePrefix}cafe_i_d']),
     );
   }
   @override
@@ -44,7 +45,7 @@ class Order extends DataClass implements Insertable<Order> {
       map['count'] = Variable<String>(count);
     }
     if (!nullToAbsent || cafeID != null) {
-      map['cafe_i_d'] = Variable<String>(cafeID);
+      map['cafe_i_d'] = Variable<int>(cafeID);
     }
     return map;
   }
@@ -68,7 +69,7 @@ class Order extends DataClass implements Insertable<Order> {
       name: serializer.fromJson<String>(json['name']),
       price: serializer.fromJson<String>(json['price']),
       count: serializer.fromJson<String>(json['count']),
-      cafeID: serializer.fromJson<String>(json['cafeID']),
+      cafeID: serializer.fromJson<int>(json['cafeID']),
     );
   }
   @override
@@ -78,11 +79,11 @@ class Order extends DataClass implements Insertable<Order> {
       'name': serializer.toJson<String>(name),
       'price': serializer.toJson<String>(price),
       'count': serializer.toJson<String>(count),
-      'cafeID': serializer.toJson<String>(cafeID),
+      'cafeID': serializer.toJson<int>(cafeID),
     };
   }
 
-  Order copyWith({String name, String price, String count, String cafeID}) =>
+  Order copyWith({String name, String price, String count, int cafeID}) =>
       Order(
         name: name ?? this.name,
         price: price ?? this.price,
@@ -117,7 +118,7 @@ class OrdersCompanion extends UpdateCompanion<Order> {
   final Value<String> name;
   final Value<String> price;
   final Value<String> count;
-  final Value<String> cafeID;
+  final Value<int> cafeID;
   const OrdersCompanion({
     this.name = const Value.absent(),
     this.price = const Value.absent(),
@@ -128,16 +129,15 @@ class OrdersCompanion extends UpdateCompanion<Order> {
     @required String name,
     @required String price,
     @required String count,
-    @required String cafeID,
+    this.cafeID = const Value.absent(),
   })  : name = Value(name),
         price = Value(price),
-        count = Value(count),
-        cafeID = Value(cafeID);
+        count = Value(count);
   static Insertable<Order> custom({
     Expression<String> name,
     Expression<String> price,
     Expression<String> count,
-    Expression<String> cafeID,
+    Expression<int> cafeID,
   }) {
     return RawValuesInsertable({
       if (name != null) 'name': name,
@@ -151,7 +151,7 @@ class OrdersCompanion extends UpdateCompanion<Order> {
       {Value<String> name,
       Value<String> price,
       Value<String> count,
-      Value<String> cafeID}) {
+      Value<int> cafeID}) {
     return OrdersCompanion(
       name: name ?? this.name,
       price: price ?? this.price,
@@ -173,7 +173,7 @@ class OrdersCompanion extends UpdateCompanion<Order> {
       map['count'] = Variable<String>(count.value);
     }
     if (cafeID.present) {
-      map['cafe_i_d'] = Variable<String>(cafeID.value);
+      map['cafe_i_d'] = Variable<int>(cafeID.value);
     }
     return map;
   }
@@ -231,15 +231,12 @@ class $OrdersTable extends Orders with TableInfo<$OrdersTable, Order> {
   }
 
   final VerificationMeta _cafeIDMeta = const VerificationMeta('cafeID');
-  GeneratedTextColumn _cafeID;
+  GeneratedIntColumn _cafeID;
   @override
-  GeneratedTextColumn get cafeID => _cafeID ??= _constructCafeID();
-  GeneratedTextColumn _constructCafeID() {
-    return GeneratedTextColumn(
-      'cafe_i_d',
-      $tableName,
-      false,
-    );
+  GeneratedIntColumn get cafeID => _cafeID ??= _constructCafeID();
+  GeneratedIntColumn _constructCafeID() {
+    return GeneratedIntColumn('cafe_i_d', $tableName, false,
+        hasAutoIncrement: true, declaredAsPrimaryKey: true);
   }
 
   @override
@@ -276,14 +273,12 @@ class $OrdersTable extends Orders with TableInfo<$OrdersTable, Order> {
     if (data.containsKey('cafe_i_d')) {
       context.handle(_cafeIDMeta,
           cafeID.isAcceptableOrUnknown(data['cafe_i_d'], _cafeIDMeta));
-    } else if (isInserting) {
-      context.missing(_cafeIDMeta);
     }
     return context;
   }
 
   @override
-  Set<GeneratedColumn> get $primaryKey => <GeneratedColumn>{};
+  Set<GeneratedColumn> get $primaryKey => {cafeID};
   @override
   Order map(Map<String, dynamic> data, {String tablePrefix}) {
     final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : null;

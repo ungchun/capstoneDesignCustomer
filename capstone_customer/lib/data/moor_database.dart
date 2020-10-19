@@ -6,7 +6,10 @@ class Orders extends Table {
   TextColumn get name => text()();
   TextColumn get price => text()();
   TextColumn get count => text()();
-  TextColumn get cafeID => text()();
+  IntColumn get cafeID => integer().autoIncrement()();
+
+  @override
+  Set<Column> get primaryKey => {cafeID};
 }
 
 @UseMoor(tables: [Orders])
