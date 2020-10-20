@@ -44,22 +44,22 @@ class _OrderWidgetState extends State<OrderWidget> {
                     child: RaisedButton(
                   onPressed: () {
                     // moor insert test
-                    // getMoordb.insertOrder(order);
+                    getMoordb.insertOrder(order);
 
                     // order add test
                     // debugPrint(snapshot.data.docs[2].data()['orderName']);
-                    FirebaseFirestore.instance
-                        .collection('order')
-                        .doc('2')
-                        .set({
-                      "menu": ["아메리카노", "카페라떼"],
-                      "count": [1, 2],
-                      "price": ["4,300", "3,500"],
-                      "상태": "",
-                      "카페이름": "도서관카페",
-                      "cafeID": "2",
-                      "주문시간": "09:00"
-                    });
+                    // FirebaseFirestore.instance
+                    //     .collection('order')
+                    //     .doc('2')
+                    //     .set({
+                    //   "menu": ["아메리카노", "카페라떼"],
+                    //   "count": [1, 2],
+                    //   "price": ["4300", "3500"],
+                    //   "상태": "",
+                    //   "카페이름": "도서관카페",
+                    //   "cafeID": "2",
+                    //   "주문시간": "09:00"
+                    // });
                   },
                   child: Text("cart in menu"),
                 )),
