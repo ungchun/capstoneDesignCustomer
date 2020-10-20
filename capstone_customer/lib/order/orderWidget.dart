@@ -10,7 +10,8 @@ class OrderWidget extends StatefulWidget {
 class _OrderWidgetState extends State<OrderWidget> {
   Stream stream;
   // test
-  Order order = Order(cafeID: 2, count: "count 2", name: "아메리카노", price: "1000");
+  Order order =
+      Order(cafeID: 2, count: "count 2", name: "아메리카노", price: "1000");
 
   @override
   void initState() {
@@ -22,7 +23,6 @@ class _OrderWidgetState extends State<OrderWidget> {
         .snapshots();
   }
 
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -33,39 +33,49 @@ class _OrderWidgetState extends State<OrderWidget> {
         ),
       ),
       body: StreamBuilder<QuerySnapshot>(
-        stream: stream,
-        builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
-          if (snapshot.data == null) return new Text(""); // 이거 안넣어주면 오류남
-          return Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Center(
-                  child: RaisedButton(
-                onPressed: () {
-                  getMoordb.insertOrder(order);
-                  // order add test
-                  // debugPrint(snapshot.data.docs[2].data()['orderName']);
-                  // FirebaseFirestore.instance
-                  //     .collection('order')
-                  //     .doc('2')
-                  //     .set({"orderName": "아메리카노", "온도": "Hot", "menu":["아메리카노","카페라떼"],"count":[1,2],"price":["4,300","3,500"]});
-                },
-                child: Text("cart in menu"),
-              )),
-              // Center(
-              //     child: RaisedButton(
-              //   onPressed: () {
-              //     FirebaseFirestore.instance
-              //         .collection('order')
-              //         .doc('2')
-              //         .delete();
-              //   },
-              //   child: Text("orderDelete"),
-              // )),
-            ],
-          );
-        }
-      ),
+          stream: stream,
+          builder:
+              (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
+            if (snapshot.data == null) return new Text(""); // 이거 안넣어주면 오류남
+            return Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Center(
+                    child: RaisedButton(
+                  onPressed: () {
+                    // moor insert test
+                    // getMoordb.insertOrder(order);
+
+                    // order add test
+                    // debugPrint(snapshot.data.docs[2].data()['orderName']);
+                    FirebaseFirestore.instance
+                        .collection('order')
+                        .doc('2')
+                        .set({
+                      "menu": ["아메리카노", "카페라떼"],
+                      "count": [1, 2],
+                      "price": ["4,300", "3,500"],
+                      "상태": "",
+                      "카페이름": "도서관카페",
+                      "cafeID": "2",
+                      "주문시간": "09:00"
+                    });
+                  },
+                  child: Text("cart in menu"),
+                )),
+                // Center(
+                //     child: RaisedButton(
+                //   onPressed: () {
+                //     FirebaseFirestore.instance
+                //         .collection('order')
+                //         .doc('2')
+                //         .delete();
+                //   },
+                //   child: Text("orderDelete"),
+                // )),
+              ],
+            );
+          }),
     );
   }
 }

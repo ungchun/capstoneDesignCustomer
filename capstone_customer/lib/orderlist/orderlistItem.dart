@@ -68,6 +68,7 @@ class _OrderListItemState extends State<OrderListItem> {
               Padding(
                 padding: const EdgeInsets.fromLTRB(20, 2, 0, 0),
                 child: Text(
+                  // "${widget.doc.data()['price']}",
                   "$price 원",
                   style: TextStyle(color: Colors.black),
                 ),
