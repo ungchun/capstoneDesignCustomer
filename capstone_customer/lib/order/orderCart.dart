@@ -8,7 +8,7 @@ class OrderCart extends StatefulWidget {
 }
 
 class _OrderCartState extends State<OrderCart> {
-
+  int count = 1;
   @override
   void initState() {
     super.initState();
@@ -23,7 +23,6 @@ class _OrderCartState extends State<OrderCart> {
           color: Colors.black,
         ),
       ),
-      
       body: StreamBuilder<List<Order>>(
           stream: getMoordb.watchOrders(),
           builder: (BuildContext context, AsyncSnapshot<List<Order>> snapshot) {
@@ -66,8 +65,8 @@ class _OrderCartState extends State<OrderCart> {
                                       // getMoordb.deleteAllOrder();
                                       debugPrint("${snapshot.data[index]}");
                                       //Order order = snapshot.data[index];
-                                      
-                                      getMoordb.deleteOrder(snapshot.data[index]);
+                                      getMoordb
+                                          .deleteOrder(snapshot.data[index]);
                                     },
                                   ),
                                 ),
@@ -96,16 +95,24 @@ class _OrderCartState extends State<OrderCart> {
                                     children: [
                                       IconButton(
                                         icon: Icon(Icons.remove),
-                                        onPressed: () {},
+                                        onPressed: () {
+                                          setState(() {
+                                            count == 1 ? count = 1 : count--;
+                                          });
+                                        },
                                       ),
                                       Padding(
                                         padding: const EdgeInsets.fromLTRB(
                                             5, 0, 5, 0),
-                                        child: Text("1개"),
+                                        child: Text("$count개"),
                                       ),
                                       IconButton(
                                         icon: Icon(Icons.add),
-                                        onPressed: () {},
+                                        onPressed: () {
+                                          setState(() {
+                                            count++;
+                                          });
+                                        },
                                       ),
                                     ],
                                   ),

@@ -13,7 +13,8 @@ class OrderWidget extends StatefulWidget {
 class _OrderWidgetState extends State<OrderWidget> {
   Stream stream;
   // test
-  // Order order =
+  Order order;
+  int cafeID;
   //     Order(cafeID: 2, count: "count 2", name: "아메리카노", price: "1000");
 
   @override
@@ -44,7 +45,7 @@ class _OrderWidgetState extends State<OrderWidget> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Padding(
-                  padding: const EdgeInsets.fromLTRB(0,50,0,10),
+                  padding: const EdgeInsets.fromLTRB(0, 50, 0, 30),
                   child: Center(
                     child: Container(
                       height: 200,
@@ -54,43 +55,38 @@ class _OrderWidgetState extends State<OrderWidget> {
                   ),
                 ),
                 Padding(
-                  padding: const EdgeInsets.fromLTRB(10,0,0,0),
+                  padding: const EdgeInsets.fromLTRB(20, 0, 0, 10),
                   child: Container(
                     child: Text(widget.doc.data()['이름']),
                   ),
                 ),
                 Padding(
-                  padding: const EdgeInsets.fromLTRB(10,10,0,0),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Text(
-                        "1000 원",
-                        style:
-                            TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.fromLTRB(0, 0, 0, 0),
-                        child: Row(
-                          children: [
-                            IconButton(
-                              icon: Icon(Icons.remove),
-                              onPressed: () {},
-                            ),
-                            Padding(
-                              padding: const EdgeInsets.fromLTRB(5, 0, 5, 0),
-                              child: Text("1개"),
-                            ),
-                            IconButton(
-                              icon: Icon(Icons.add),
-                              onPressed: () {},
-                            ),
-                          ],
-                        ),
-                      )
-                    ],
+                  padding: const EdgeInsets.fromLTRB(20, 0, 0, 20),
+                  child: Container(
+                    child: Text(widget.doc.data()['영어이름']),
                   ),
                 ),
+                Padding(
+                  padding: const EdgeInsets.fromLTRB(20, 10, 0, 0),
+                  child: Text(
+                    "${widget.doc.data()['가격']} 원",
+                    style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
+                  ),
+                ),
+                
+                Padding(
+                  padding: const EdgeInsets.fromLTRB(0,30,0,0),
+                  child: Center(
+                    child: RaisedButton(
+                      child: Text("장바구니에 담기"),
+                      onPressed: (){
+                        cafeID = int.parse(widget.doc.data()['cafeID']);
+                        order = Order(cafeID: cafeID, count: "1", name: "${widget.doc.data()['이름']}", price: "${widget.doc.data()['가격']}");
+                        getMoordb.insertOrder(order);
+                      },
+                    ),
+                  ),
+                )
               ],
             );
           }),
