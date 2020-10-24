@@ -41,16 +41,56 @@ class _OrderWidgetState extends State<OrderWidget> {
               (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
             if (snapshot.data == null) return new Text(""); // 이거 안넣어주면 오류남
             return Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Container(
-                  height: 100,
-                  width: 100,
-                  color: Colors.black,
+                Padding(
+                  padding: const EdgeInsets.fromLTRB(0,50,0,10),
+                  child: Center(
+                    child: Container(
+                      height: 200,
+                      width: 200,
+                      color: Colors.black,
+                    ),
+                  ),
                 ),
-                Container(
-                  child: Text(widget.doc.data()['이름']),
+                Padding(
+                  padding: const EdgeInsets.fromLTRB(10,0,0,0),
+                  child: Container(
+                    child: Text(widget.doc.data()['이름']),
+                  ),
                 ),
-                
+                Padding(
+                  padding: const EdgeInsets.fromLTRB(10,10,0,0),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Text(
+                        "1000 원",
+                        style:
+                            TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.fromLTRB(0, 0, 0, 0),
+                        child: Row(
+                          children: [
+                            IconButton(
+                              icon: Icon(Icons.remove),
+                              onPressed: () {},
+                            ),
+                            Padding(
+                              padding: const EdgeInsets.fromLTRB(5, 0, 5, 0),
+                              child: Text("1개"),
+                            ),
+                            IconButton(
+                              icon: Icon(Icons.add),
+                              onPressed: () {},
+                            ),
+                          ],
+                        ),
+                      )
+                    ],
+                  ),
+                ),
               ],
             );
           }),
