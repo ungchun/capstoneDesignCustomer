@@ -16,7 +16,7 @@ class _OrderListItemState extends State<OrderListItem> {
   FirebaseFirestore firestore = FirebaseFirestore.instance;
   int menuSize;
   int price = 0;
-  String tempPrice = "";
+  // int tempPrice = 0;
   Stream stream;
 
   @override
@@ -26,8 +26,10 @@ class _OrderListItemState extends State<OrderListItem> {
     menuSize = widget.doc.data()['menu'].length;
 
     for (int i = 0; i < menuSize; i++) {
-      tempPrice = widget.doc.data()['price'][i];
-      price += int.parse(tempPrice);
+      price +=
+          widget.doc.data()['price'][i] * widget.doc.data()['count'][i];
+      // tempPrice = widget.doc.data()['price'][i];
+      // price += (tempPrice);
     }
     stream = FirebaseFirestore.instance
         .collection('cafe')
@@ -100,7 +102,7 @@ class _OrderListItemState extends State<OrderListItem> {
                             context,
                             MaterialPageRoute(
                                 builder: (context) =>
-                                    OrderlistDetailInfo(widget.doc)));
+                                    OrderlistDetailInfo(widget.doc.data())));
                         // test();
                       },
                       child: Text("주문상세"),

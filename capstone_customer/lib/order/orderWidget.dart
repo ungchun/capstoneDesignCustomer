@@ -15,6 +15,7 @@ class _OrderWidgetState extends State<OrderWidget> {
   // test
   Order order;
   int cafeID;
+  int price;
   //     Order(cafeID: 2, count: "count 2", name: "아메리카노", price: "1000");
 
   @override
@@ -81,7 +82,8 @@ class _OrderWidgetState extends State<OrderWidget> {
                       child: Text("장바구니에 담기"),
                       onPressed: (){
                         cafeID = int.parse(widget.doc.data()['cafeID']);
-                        order = Order(cafeID: cafeID, count: "1", name: "${widget.doc.data()['이름']}", price: "${widget.doc.data()['가격']}");
+                        price = int.parse(widget.doc.data()['가격']);
+                        order = Order(cafeID: cafeID, count: "1", name: "${widget.doc.data()['이름']}", price: price);
                         getMoordb.insertOrder(order);
                       },
                     ),

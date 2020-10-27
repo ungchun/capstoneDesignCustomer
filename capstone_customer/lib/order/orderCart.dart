@@ -83,7 +83,7 @@ class _OrderCartState extends State<OrderCart> {
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
                                 Text(
-                                  "${snapshot.data[index].price} 원",
+                                  "${snapshot.data[index].price * count} 원",
                                   style: TextStyle(
                                       fontWeight: FontWeight.bold,
                                       fontSize: 20),
@@ -120,43 +120,22 @@ class _OrderCartState extends State<OrderCart> {
                               ],
                             ),
                           ),
+
+                          // // 이거 버튼 맨 밑으로 보내야하는데 + 스크롤 했을 때 안내려가야함
+                          // Column(
+                          //   children: [
+                          //     RaisedButton(
+                          //       child: Text("주문하기"),
+                          //       onPressed: () {},
+                          //     )
+                          //   ],
+                          // )
+
                         ],
                       ),
                     ));
                   },
                 ),
-
-                // insert 잘 들어가는거 같은데 watch 하려면 streambuilder 써야하니까 값 넘겨받아서 test 한번 해보기
-                // SizedBox(
-                //   width: double.infinity,
-                //   height: 50,
-                //   child: RaisedButton(
-                //     child: Text("moor db insert test"),
-                //     onPressed: () {
-                //       getMoordb.insertOrder(order);
-                //     },
-                //   ),
-                // ),
-                // SizedBox(
-                //   width: double.infinity,
-                //   height: 50,
-                //   child: RaisedButton(
-                //     child: Text("moor db delete test"),
-                //     onPressed: () {
-                //       getMoordb.deleteAllOrder();
-                //     },
-                //   ),
-                // ),
-                // SizedBox(
-                //   width: double.infinity,
-                //   height: 50,
-                //   child: RaisedButton(
-                //     child: Text("moor db watch test"),
-                //     onPressed: () {
-                //       print(stream);
-                //     },
-                //   ),
-                // )
               ],
             );
           }),

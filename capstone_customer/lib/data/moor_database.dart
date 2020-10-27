@@ -4,13 +4,14 @@ part 'moor_database.g.dart';
 
 class Orders extends Table {
   TextColumn get name => text()();
-  // IntColumn get price =>integer()();
-  TextColumn get price => text()();
+  IntColumn get price =>integer()();
+  // TextColumn get price => text()();
   TextColumn get count => text()();
-  IntColumn get cafeID => integer().autoIncrement()();
+  IntColumn get cafeID => integer()();
+  IntColumn get orderSeq => integer().autoIncrement()();
 
   @override
-  Set<Column> get primaryKey => {cafeID};
+  Set<Column> get primaryKey => {orderSeq};
 }
 
 @UseMoor(tables: [Orders])

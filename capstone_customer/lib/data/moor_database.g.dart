@@ -9,14 +9,16 @@ part of 'moor_database.dart';
 // ignore_for_file: unnecessary_brace_in_string_interps, unnecessary_this
 class Order extends DataClass implements Insertable<Order> {
   final String name;
-  final String price;
+  final int price;
   final String count;
   final int cafeID;
+  final int orderSeq;
   Order(
       {@required this.name,
       @required this.price,
       @required this.count,
-      @required this.cafeID});
+      @required this.cafeID,
+      this.orderSeq});
   factory Order.fromData(Map<String, dynamic> data, GeneratedDatabase db,
       {String prefix}) {
     final effectivePrefix = prefix ?? '';
@@ -24,12 +26,13 @@ class Order extends DataClass implements Insertable<Order> {
     final intType = db.typeSystem.forDartType<int>();
     return Order(
       name: stringType.mapFromDatabaseResponse(data['${effectivePrefix}name']),
-      price:
-          stringType.mapFromDatabaseResponse(data['${effectivePrefix}price']),
+      price: intType.mapFromDatabaseResponse(data['${effectivePrefix}price']),
       count:
           stringType.mapFromDatabaseResponse(data['${effectivePrefix}count']),
       cafeID:
           intType.mapFromDatabaseResponse(data['${effectivePrefix}cafe_i_d']),
+      orderSeq:
+          intType.mapFromDatabaseResponse(data['${effectivePrefix}order_seq']),
     );
   }
   @override
@@ -39,13 +42,16 @@ class Order extends DataClass implements Insertable<Order> {
       map['name'] = Variable<String>(name);
     }
     if (!nullToAbsent || price != null) {
-      map['price'] = Variable<String>(price);
+      map['price'] = Variable<int>(price);
     }
     if (!nullToAbsent || count != null) {
       map['count'] = Variable<String>(count);
     }
     if (!nullToAbsent || cafeID != null) {
       map['cafe_i_d'] = Variable<int>(cafeID);
+    }
+    if (!nullToAbsent || orderSeq != null) {
+      map['order_seq'] = Variable<int>(orderSeq);
     }
     return map;
   }
@@ -59,6 +65,9 @@ class Order extends DataClass implements Insertable<Order> {
           count == null && nullToAbsent ? const Value.absent() : Value(count),
       cafeID:
           cafeID == null && nullToAbsent ? const Value.absent() : Value(cafeID),
+      orderSeq: orderSeq == null && nullToAbsent
+          ? const Value.absent()
+          : Value(orderSeq),
     );
   }
 
@@ -67,9 +76,10 @@ class Order extends DataClass implements Insertable<Order> {
     serializer ??= moorRuntimeOptions.defaultSerializer;
     return Order(
       name: serializer.fromJson<String>(json['name']),
-      price: serializer.fromJson<String>(json['price']),
+      price: serializer.fromJson<int>(json['price']),
       count: serializer.fromJson<String>(json['count']),
       cafeID: serializer.fromJson<int>(json['cafeID']),
+      orderSeq: serializer.fromJson<int>(json['orderSeq']),
     );
   }
   @override
@@ -77,18 +87,21 @@ class Order extends DataClass implements Insertable<Order> {
     serializer ??= moorRuntimeOptions.defaultSerializer;
     return <String, dynamic>{
       'name': serializer.toJson<String>(name),
-      'price': serializer.toJson<String>(price),
+      'price': serializer.toJson<int>(price),
       'count': serializer.toJson<String>(count),
       'cafeID': serializer.toJson<int>(cafeID),
+      'orderSeq': serializer.toJson<int>(orderSeq),
     };
   }
 
-  Order copyWith({String name, String price, String count, int cafeID}) =>
+  Order copyWith(
+          {String name, int price, String count, int cafeID, int orderSeq}) =>
       Order(
         name: name ?? this.name,
         price: price ?? this.price,
         count: count ?? this.count,
         cafeID: cafeID ?? this.cafeID,
+        orderSeq: orderSeq ?? this.orderSeq,
       );
   @override
   String toString() {
@@ -96,14 +109,17 @@ class Order extends DataClass implements Insertable<Order> {
           ..write('name: $name, ')
           ..write('price: $price, ')
           ..write('count: $count, ')
-          ..write('cafeID: $cafeID')
+          ..write('cafeID: $cafeID, ')
+          ..write('orderSeq: $orderSeq')
           ..write(')'))
         .toString();
   }
 
   @override
-  int get hashCode => $mrjf($mrjc(name.hashCode,
-      $mrjc(price.hashCode, $mrjc(count.hashCode, cafeID.hashCode))));
+  int get hashCode => $mrjf($mrjc(
+      name.hashCode,
+      $mrjc(price.hashCode,
+          $mrjc(count.hashCode, $mrjc(cafeID.hashCode, orderSeq.hashCode)))));
   @override
   bool operator ==(dynamic other) =>
       identical(this, other) ||
@@ -111,52 +127,61 @@ class Order extends DataClass implements Insertable<Order> {
           other.name == this.name &&
           other.price == this.price &&
           other.count == this.count &&
-          other.cafeID == this.cafeID);
+          other.cafeID == this.cafeID &&
+          other.orderSeq == this.orderSeq);
 }
 
 class OrdersCompanion extends UpdateCompanion<Order> {
   final Value<String> name;
-  final Value<String> price;
+  final Value<int> price;
   final Value<String> count;
   final Value<int> cafeID;
+  final Value<int> orderSeq;
   const OrdersCompanion({
     this.name = const Value.absent(),
     this.price = const Value.absent(),
     this.count = const Value.absent(),
     this.cafeID = const Value.absent(),
+    this.orderSeq = const Value.absent(),
   });
   OrdersCompanion.insert({
     @required String name,
-    @required String price,
+    @required int price,
     @required String count,
-    this.cafeID = const Value.absent(),
+    @required int cafeID,
+    this.orderSeq = const Value.absent(),
   })  : name = Value(name),
         price = Value(price),
-        count = Value(count);
+        count = Value(count),
+        cafeID = Value(cafeID);
   static Insertable<Order> custom({
     Expression<String> name,
-    Expression<String> price,
+    Expression<int> price,
     Expression<String> count,
     Expression<int> cafeID,
+    Expression<int> orderSeq,
   }) {
     return RawValuesInsertable({
       if (name != null) 'name': name,
       if (price != null) 'price': price,
       if (count != null) 'count': count,
       if (cafeID != null) 'cafe_i_d': cafeID,
+      if (orderSeq != null) 'order_seq': orderSeq,
     });
   }
 
   OrdersCompanion copyWith(
       {Value<String> name,
-      Value<String> price,
+      Value<int> price,
       Value<String> count,
-      Value<int> cafeID}) {
+      Value<int> cafeID,
+      Value<int> orderSeq}) {
     return OrdersCompanion(
       name: name ?? this.name,
       price: price ?? this.price,
       count: count ?? this.count,
       cafeID: cafeID ?? this.cafeID,
+      orderSeq: orderSeq ?? this.orderSeq,
     );
   }
 
@@ -167,13 +192,16 @@ class OrdersCompanion extends UpdateCompanion<Order> {
       map['name'] = Variable<String>(name.value);
     }
     if (price.present) {
-      map['price'] = Variable<String>(price.value);
+      map['price'] = Variable<int>(price.value);
     }
     if (count.present) {
       map['count'] = Variable<String>(count.value);
     }
     if (cafeID.present) {
       map['cafe_i_d'] = Variable<int>(cafeID.value);
+    }
+    if (orderSeq.present) {
+      map['order_seq'] = Variable<int>(orderSeq.value);
     }
     return map;
   }
@@ -184,7 +212,8 @@ class OrdersCompanion extends UpdateCompanion<Order> {
           ..write('name: $name, ')
           ..write('price: $price, ')
           ..write('count: $count, ')
-          ..write('cafeID: $cafeID')
+          ..write('cafeID: $cafeID, ')
+          ..write('orderSeq: $orderSeq')
           ..write(')'))
         .toString();
   }
@@ -207,11 +236,11 @@ class $OrdersTable extends Orders with TableInfo<$OrdersTable, Order> {
   }
 
   final VerificationMeta _priceMeta = const VerificationMeta('price');
-  GeneratedTextColumn _price;
+  GeneratedIntColumn _price;
   @override
-  GeneratedTextColumn get price => _price ??= _constructPrice();
-  GeneratedTextColumn _constructPrice() {
-    return GeneratedTextColumn(
+  GeneratedIntColumn get price => _price ??= _constructPrice();
+  GeneratedIntColumn _constructPrice() {
+    return GeneratedIntColumn(
       'price',
       $tableName,
       false,
@@ -235,12 +264,24 @@ class $OrdersTable extends Orders with TableInfo<$OrdersTable, Order> {
   @override
   GeneratedIntColumn get cafeID => _cafeID ??= _constructCafeID();
   GeneratedIntColumn _constructCafeID() {
-    return GeneratedIntColumn('cafe_i_d', $tableName, false,
+    return GeneratedIntColumn(
+      'cafe_i_d',
+      $tableName,
+      false,
+    );
+  }
+
+  final VerificationMeta _orderSeqMeta = const VerificationMeta('orderSeq');
+  GeneratedIntColumn _orderSeq;
+  @override
+  GeneratedIntColumn get orderSeq => _orderSeq ??= _constructOrderSeq();
+  GeneratedIntColumn _constructOrderSeq() {
+    return GeneratedIntColumn('order_seq', $tableName, false,
         hasAutoIncrement: true, declaredAsPrimaryKey: true);
   }
 
   @override
-  List<GeneratedColumn> get $columns => [name, price, count, cafeID];
+  List<GeneratedColumn> get $columns => [name, price, count, cafeID, orderSeq];
   @override
   $OrdersTable get asDslTable => this;
   @override
@@ -273,12 +314,18 @@ class $OrdersTable extends Orders with TableInfo<$OrdersTable, Order> {
     if (data.containsKey('cafe_i_d')) {
       context.handle(_cafeIDMeta,
           cafeID.isAcceptableOrUnknown(data['cafe_i_d'], _cafeIDMeta));
+    } else if (isInserting) {
+      context.missing(_cafeIDMeta);
+    }
+    if (data.containsKey('order_seq')) {
+      context.handle(_orderSeqMeta,
+          orderSeq.isAcceptableOrUnknown(data['order_seq'], _orderSeqMeta));
     }
     return context;
   }
 
   @override
-  Set<GeneratedColumn> get $primaryKey => {cafeID};
+  Set<GeneratedColumn> get $primaryKey => {orderSeq};
   @override
   Order map(Map<String, dynamic> data, {String tablePrefix}) {
     final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : null;
