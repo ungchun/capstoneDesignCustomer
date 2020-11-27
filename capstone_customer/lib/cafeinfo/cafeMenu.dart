@@ -131,21 +131,31 @@ class _CafeMenuState extends State<CafeMenu> {
         builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
           if (snapshot.data == null) return new Text(""); // 이거 안넣어주면 오류남
           return ListView.builder(
+            physics: ClampingScrollPhysics(),
             shrinkWrap: true,
+            scrollDirection: Axis.vertical,
             itemCount: snapshot.data.size,
             itemBuilder: (context, index) {
               return GestureDetector(
                 onTap: () => {
-                  Navigator.push(context,
-                      MaterialPageRoute(builder: (context) => OrderWidget(snapshot.data.docs[index])))
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) =>
+                              OrderWidget(snapshot.data.docs[index])))
                 },
                 child: Row(
                   children: [
-                    Container(
-                      height: 100,
-                      width: 100,
-                      color: Colors.black,
-                    ),
+                    Image(
+                        height: 100,
+                        width: 100,
+                        image: NetworkImage(
+                            snapshot.data.docs[index].data()['image'])),
+                    // Container(
+                    //   height: 100,
+                    //   width: 100,
+                    //   color: Colors.black,
+                    // ),
                     Padding(
                       padding: const EdgeInsets.all(15.0),
                       child: Column(

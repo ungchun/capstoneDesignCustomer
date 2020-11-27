@@ -10,7 +10,7 @@ part of 'moor_database.dart';
 class Order extends DataClass implements Insertable<Order> {
   final String name;
   final int price;
-  final String count;
+  int count;
   final int cafeID;
   final int orderSeq;
   Order(
@@ -18,7 +18,7 @@ class Order extends DataClass implements Insertable<Order> {
       @required this.price,
       @required this.count,
       @required this.cafeID,
-      this.orderSeq});
+      @required this.orderSeq});
   factory Order.fromData(Map<String, dynamic> data, GeneratedDatabase db,
       {String prefix}) {
     final effectivePrefix = prefix ?? '';
@@ -28,7 +28,7 @@ class Order extends DataClass implements Insertable<Order> {
       name: stringType.mapFromDatabaseResponse(data['${effectivePrefix}name']),
       price: intType.mapFromDatabaseResponse(data['${effectivePrefix}price']),
       count:
-          stringType.mapFromDatabaseResponse(data['${effectivePrefix}count']),
+          intType.mapFromDatabaseResponse(data['${effectivePrefix}count']),
       cafeID:
           intType.mapFromDatabaseResponse(data['${effectivePrefix}cafe_i_d']),
       orderSeq:
@@ -45,7 +45,7 @@ class Order extends DataClass implements Insertable<Order> {
       map['price'] = Variable<int>(price);
     }
     if (!nullToAbsent || count != null) {
-      map['count'] = Variable<String>(count);
+      map['count'] = Variable<int>(count);
     }
     if (!nullToAbsent || cafeID != null) {
       map['cafe_i_d'] = Variable<int>(cafeID);
@@ -77,7 +77,7 @@ class Order extends DataClass implements Insertable<Order> {
     return Order(
       name: serializer.fromJson<String>(json['name']),
       price: serializer.fromJson<int>(json['price']),
-      count: serializer.fromJson<String>(json['count']),
+      count: serializer.fromJson<int>(json['count']),
       cafeID: serializer.fromJson<int>(json['cafeID']),
       orderSeq: serializer.fromJson<int>(json['orderSeq']),
     );
@@ -88,7 +88,7 @@ class Order extends DataClass implements Insertable<Order> {
     return <String, dynamic>{
       'name': serializer.toJson<String>(name),
       'price': serializer.toJson<int>(price),
-      'count': serializer.toJson<String>(count),
+      'count': serializer.toJson<int>(count),
       'cafeID': serializer.toJson<int>(cafeID),
       'orderSeq': serializer.toJson<int>(orderSeq),
     };
@@ -134,7 +134,7 @@ class Order extends DataClass implements Insertable<Order> {
 class OrdersCompanion extends UpdateCompanion<Order> {
   final Value<String> name;
   final Value<int> price;
-  final Value<String> count;
+  final Value<int> count;
   final Value<int> cafeID;
   final Value<int> orderSeq;
   const OrdersCompanion({
@@ -147,7 +147,7 @@ class OrdersCompanion extends UpdateCompanion<Order> {
   OrdersCompanion.insert({
     @required String name,
     @required int price,
-    @required String count,
+    @required int count,
     @required int cafeID,
     this.orderSeq = const Value.absent(),
   })  : name = Value(name),
@@ -195,7 +195,7 @@ class OrdersCompanion extends UpdateCompanion<Order> {
       map['price'] = Variable<int>(price.value);
     }
     if (count.present) {
-      map['count'] = Variable<String>(count.value);
+      map['count'] = Variable<int>(count.value);
     }
     if (cafeID.present) {
       map['cafe_i_d'] = Variable<int>(cafeID.value);
@@ -248,11 +248,11 @@ class $OrdersTable extends Orders with TableInfo<$OrdersTable, Order> {
   }
 
   final VerificationMeta _countMeta = const VerificationMeta('count');
-  GeneratedTextColumn _count;
+  GeneratedIntColumn _count;
   @override
-  GeneratedTextColumn get count => _count ??= _constructCount();
-  GeneratedTextColumn _constructCount() {
-    return GeneratedTextColumn(
+  GeneratedIntColumn get count => _count ??= _constructCount();
+  GeneratedIntColumn _constructCount() {
+    return GeneratedIntColumn(
       'count',
       $tableName,
       false,

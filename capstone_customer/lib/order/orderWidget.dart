@@ -48,11 +48,15 @@ class _OrderWidgetState extends State<OrderWidget> {
                 Padding(
                   padding: const EdgeInsets.fromLTRB(0, 50, 0, 30),
                   child: Center(
-                    child: Container(
-                      height: 200,
-                      width: 200,
-                      color: Colors.black,
-                    ),
+                    child: Image(
+                        height: 200,
+                        width: 200,
+                        image: NetworkImage(widget.doc.data()['image'])),
+                    // child: Container(
+                    //   height: 200,
+                    //   width: 200,
+                    //   color: Colors.black,
+                    // ),
                   ),
                 ),
                 Padding(
@@ -74,16 +78,19 @@ class _OrderWidgetState extends State<OrderWidget> {
                     style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
                   ),
                 ),
-                
                 Padding(
-                  padding: const EdgeInsets.fromLTRB(0,30,0,0),
+                  padding: const EdgeInsets.fromLTRB(0, 30, 0, 0),
                   child: Center(
                     child: RaisedButton(
                       child: Text("장바구니에 담기"),
-                      onPressed: (){
+                      onPressed: () {
                         cafeID = int.parse(widget.doc.data()['cafeID']);
                         price = int.parse(widget.doc.data()['가격']);
-                        order = Order(cafeID: cafeID, count: "1", name: "${widget.doc.data()['이름']}", price: price);
+                        order = Order(
+                            cafeID: cafeID,
+                            count: 1,
+                            name: "${widget.doc.data()['이름']}",
+                            price: price);
                         getMoordb.insertOrder(order);
                       },
                     ),

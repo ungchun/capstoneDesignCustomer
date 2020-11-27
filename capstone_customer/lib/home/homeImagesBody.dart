@@ -10,7 +10,7 @@ class HomeImagesBody extends StatefulWidget {
 }
 
 final List<String> imgList = [
-  "https://cdn.pixabay.com/photo/2020/09/01/06/10/lake-5534341__340.jpg",
+  "https://mblogthumb-phinf.pstatic.net/MjAxODA3MDlfMTgy/MDAxNTMxMTIwNjE0OTE5.U8_TNjEILKhBl6rdOc-uFNG6MDPX_KgoCMvXn7IMVYog.GmRP4cQiSa5xjcgvxICcepgjJZtlrkDzAy6aip6AcaMg.JPEG.mortareg/%EB%8B%A4%EB%82%AD_%EC%B9%B4%ED%8E%98_best5_%EC%98%88%EC%81%9C_%EC%B9%B4%ED%8E%98_%286%29.JPG?type=w800",
   "https://cdn.pixabay.com/photo/2019/09/24/09/58/marrakech-4500910__340.jpg",
   "https://cdn.pixabay.com/photo/2019/12/02/07/07/autumn-4667080__340.jpg",
   "https://cdn.pixabay.com/photo/2020/10/04/18/13/mountains-5627143__340.jpg"
