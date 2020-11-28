@@ -81,18 +81,26 @@ class _OrderWidgetState extends State<OrderWidget> {
                 Padding(
                   padding: const EdgeInsets.fromLTRB(0, 30, 0, 0),
                   child: Center(
-                    child: RaisedButton(
-                      child: Text("장바구니에 담기"),
-                      onPressed: () {
-                        cafeID = int.parse(widget.doc.data()['cafeID']);
-                        price = int.parse(widget.doc.data()['가격']);
-                        order = Order(
-                            cafeID: cafeID,
-                            count: 1,
-                            name: "${widget.doc.data()['이름']}",
-                            price: price);
-                        getMoordb.insertOrder(order);
-                      },
+                    child: SizedBox(
+                      width: 130,
+                      child: FlatButton(
+                        color: Colors.black12,
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(18.0),
+                        ),
+                        child: Text("장바구니에 담기"),
+                        onPressed: () {
+                          cafeID = int.parse(widget.doc.data()['cafeID']);
+                          price = int.parse(widget.doc.data()['가격']);
+                          order = Order(
+                              cafeID: cafeID,
+                              count: 1,
+                              name: "${widget.doc.data()['이름']}",
+                              price: price,
+                              orderSeq: null);
+                          getMoordb.insertOrder(order);
+                        },
+                      ),
                     ),
                   ),
                 )

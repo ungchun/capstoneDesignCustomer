@@ -158,7 +158,9 @@ class _OrderCartState extends State<OrderCart> {
 
       //여기 moor db -> firebase 로 주문할때 넘겨야함
       bottomNavigationBar: Container(
+        height: 50,
         child: RaisedButton(
+          color: Colors.white70,
           onPressed: () {
             List _testA = [];
             List _testB = [];
@@ -171,8 +173,8 @@ class _OrderCartState extends State<OrderCart> {
 
             for (int i = 0; i < _array.data.length; i++) {
               String a = _array.data[i].name.toString();
-              String b = _array.data[i].count.toString();
-              String c = _array.data[i].price.toString();
+              int b = _array.data[i].count;
+              int c = _array.data[i].price;
               _testA.add(a);
               _testB.add(b);
               _testC.add(c);
@@ -185,7 +187,7 @@ class _OrderCartState extends State<OrderCart> {
               "menu": _testA,
               "count": _testB,
               "price": _testC,
-              "상태": "",
+              "상태": "대기",
               "카페이름": "공대카페",
               "cafeID": "1",
               "주문시간": "09:00"
