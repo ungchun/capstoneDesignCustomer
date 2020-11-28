@@ -42,7 +42,7 @@ class _OrderlistDetailInfoState extends State<OrderlistDetailInfo> {
               ),
             ),
             Padding(
-              padding: const EdgeInsets.fromLTRB(350, 30, 0, 0),
+              padding: const EdgeInsets.fromLTRB(260, 30, 0, 0),
               child: Text(
                 '${widget.map['주문시간']}',
                 style: TextStyle(fontSize: 18),

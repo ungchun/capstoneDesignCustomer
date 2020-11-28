@@ -10,10 +10,10 @@ class HomeImagesBody extends StatefulWidget {
 }
 
 final List<String> imgList = [
-  "https://mblogthumb-phinf.pstatic.net/MjAxODA3MDlfMTgy/MDAxNTMxMTIwNjE0OTE5.U8_TNjEILKhBl6rdOc-uFNG6MDPX_KgoCMvXn7IMVYog.GmRP4cQiSa5xjcgvxICcepgjJZtlrkDzAy6aip6AcaMg.JPEG.mortareg/%EB%8B%A4%EB%82%AD_%EC%B9%B4%ED%8E%98_best5_%EC%98%88%EC%81%9C_%EC%B9%B4%ED%8E%98_%286%29.JPG?type=w800",
-  "https://cdn.pixabay.com/photo/2019/09/24/09/58/marrakech-4500910__340.jpg",
-  "https://cdn.pixabay.com/photo/2019/12/02/07/07/autumn-4667080__340.jpg",
-  "https://cdn.pixabay.com/photo/2020/10/04/18/13/mountains-5627143__340.jpg"
+  "https://i.pinimg.com/736x/f3/ef/1b/f3ef1b910f37e5798c45b63cad7a1036.jpg",
+  "https://mblogthumb-phinf.pstatic.net/MjAxNzA0MTNfMzUg/MDAxNDkyMDY5NTg2Mjk1.RHX9MwTGWTdYeSOAiWPzTlYiGaHM2SJ0X2MjdH9ui5sg.udvgC1kesuA69vtXC1-wd8mhcUy65AGpJ0LOEXJQOf4g.JPEG.realbeans/%EC%B9%B4%ED%8E%98%EC%9E%85%EA%B5%AC%EC%9D%B8%ED%85%8C%EB%A6%AC%EC%96%B416.jpg?type=w2",
+  "https://i.pinimg.com/originals/47/b1/dc/47b1dcfcbc5ac15aaa311b3ab0674ac8.jpg",
+  "https://i.pinimg.com/originals/dd/a1/a4/dda1a416b6acbb238c3bb9a0cb1f7998.jpg"
 ];
 
 // final List<String> textList = ["공대카페", "도서관카페", "의양관카페", "신바어우관카페"];

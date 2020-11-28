@@ -14,59 +14,73 @@ class CafeinfoWidget extends StatefulWidget {
 }
 
 class _CafeinfoWidgetState extends State<CafeinfoWidget> {
+  Stream stream;
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    stream = FirebaseFirestore.instance
+        .collection('order')
+        .snapshots();
+  }
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-        floatingActionButton: Padding(
-          padding: const EdgeInsets.fromLTRB(0, 0, 5, 15),
-          child: SizedBox(
-            height: 70,
-            width: 70,
-            child: FloatingActionButton(
-              onPressed: () {
-                Navigator.push(context,
-                    MaterialPageRoute(builder: (context) => OrderCart()));
-              },
-              child: Icon(Icons.shopping_basket),
+    return StreamBuilder<QuerySnapshot>(
+        stream: stream,
+        builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot){
+        return Scaffold(
+            floatingActionButton: Padding(
+              padding: const EdgeInsets.fromLTRB(0, 0, 5, 15),
+              child: SizedBox(
+                height: 70,
+                width: 70,
+                child: FloatingActionButton(
+                  onPressed: () {
+                    Navigator.push(context,
+                        MaterialPageRoute(builder: (context) => OrderCart(snapshot.data)));
+                  },
+                  child: Icon(Icons.shopping_basket),
+                ),
+              ),
             ),
-          ),
-        ),
-        body: DefaultTabController(
-          length: 2,
-          child: Scaffold(
-            appBar: AppBar(
-              bottom: TabBar(
-                tabs: [
-                  Tab(
-                    child: Text(
-                      "메뉴",
-                      style: TextStyle(color: Colors.black),
-                    ),
+            body: DefaultTabController(
+              length: 2,
+              child: Scaffold(
+                appBar: AppBar(
+                  bottom: TabBar(
+                    tabs: [
+                      Tab(
+                        child: Text(
+                          "메뉴",
+                          style: TextStyle(color: Colors.black),
+                        ),
+                      ),
+                      Tab(
+                        child: Text(
+                          "카페정보",
+                          style: TextStyle(color: Colors.black),
+                        ),
+                      ),
+                    ],
                   ),
-                  Tab(
-                    child: Text(
-                      "카페정보",
-                      style: TextStyle(color: Colors.black),
-                    ),
+                  backgroundColor: Colors.white,
+                  title: Text(
+                    "${widget.doc.data()['이름']}",
+                    style: TextStyle(color: Colors.black),
                   ),
-                ],
+                  leading: BackButton(
+                    color: Colors.black,
+                  ),
+                ),
+                body: TabBarView(
+                  children: [
+                    CafeMenu(widget.doc),
+                    CafeDetailInfo(widget.doc),
+                  ],
+                ),
               ),
-              backgroundColor: Colors.white,
-              title: Text(
-                "${widget.doc.data()['이름']}",
-                style: TextStyle(color: Colors.black),
-              ),
-              leading: BackButton(
-                color: Colors.black,
-              ),
-            ),
-            body: TabBarView(
-              children: [
-                CafeMenu(widget.doc),
-                CafeDetailInfo(widget.doc),
-              ],
-            ),
-          ),
-        ));
+            ));
+      }
+    );
   }
 }
