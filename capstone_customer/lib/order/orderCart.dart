@@ -19,7 +19,7 @@ class OrderCart extends StatefulWidget {
 
 class _OrderCartState extends State<OrderCart> {
   AsyncSnapshot<List<Order>> _array;
-  int a =0;
+  int a = 0;
 
   @override
   void initState() {
@@ -147,16 +147,6 @@ class _OrderCartState extends State<OrderCart> {
                               ],
                             ),
                           ),
-
-                          // 이거 버튼 맨 밑으로 보내야하는데 + 스크롤 했을 때 안내려가야함
-                          // Column(
-                          //   children: [
-                          //     RaisedButton(
-                          //       child: Text("주문하기"),
-                          //       onPressed: () {},
-                          //     )
-                          //   ],
-                          // )
                         ],
                       ),
                     ));
@@ -173,8 +163,9 @@ class _OrderCartState extends State<OrderCart> {
             List _testA = [];
             List _testB = [];
             List _testC = [];
-            
-            setState((){
+            int price = 0;
+
+            setState(() {
               a++;
             });
 
@@ -185,6 +176,7 @@ class _OrderCartState extends State<OrderCart> {
               _testA.add(a);
               _testB.add(b);
               _testC.add(c);
+              price += _array.data[i].price * _array.data[i].count;
             }
             FirebaseFirestore.instance
                 .collection('order')
@@ -198,6 +190,8 @@ class _OrderCartState extends State<OrderCart> {
               "cafeID": "1",
               "주문시간": "09:00"
             });
+            Navigator.of(context).push(
+                MaterialPageRoute(builder: (context) => Payment(price: price)));
           },
           child: Text("주문하기"),
         ),
@@ -208,15 +202,15 @@ class _OrderCartState extends State<OrderCart> {
 
 // ignore: must_be_immutable
 class Payment extends StatelessWidget {
-  // dynamic data;
+  dynamic price;
 
-  // Payment({@required this.data}) : assert(data != null);
+  Payment({@required this.price}) : assert(price != null);
 
   @override
   Widget build(context) {
     return IamportPayment(
       appBar: new AppBar(
-        title: new Text('카카오페이 결제'),
+        title: new Text(price.toString()),
       ),
       /* 웹뷰 로딩 컴포넌트 */
       initialChild: Container(
@@ -243,13 +237,13 @@ class Payment extends StatelessWidget {
         'name': '아임포트 결제데이터 분석', // 주문명
         // 'merchantUid': 'mid_0',
         'merchantUid': 'mid_${DateTime.now().millisecondsSinceEpoch}', // 주문번호
-        'amount': 10000, // 결제금액
+        'amount': price, // 결제금액
         // 'amount': int.parse(data['price'].toString()), // 결제금액
-        'buyerName': '홍길동', // 구매자 이름
+        'buyerName': '김성훈', // 구매자 이름
         'buyerTel': '01012345678', // 구매자 연락처
         'buyerEmail': 'example@naver.com', // 구매자 이메일
-        'buyerAddr': '서울시 강남구 신사동 661-16', // 구매자 주소
-        'buyerPostcode': '06018', // 구매자 우편번호
+        'buyerAddr': '대구광역시 중구 남산4동 2655-18', // 구매자 주소
+        'buyerPostcode': '12345', // 구매자 우편번호
         'appScheme': 'example', // 앱 URL scheme
         'display': {
           'cardQuota': [2, 3] //결제창 UI 내 할부개월수 제한
