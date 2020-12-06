@@ -212,7 +212,7 @@ class Payment extends StatelessWidget {
   Widget build(context) {
     return IamportPayment(
       appBar: new AppBar(
-        title: new Text(price.toString()),
+        title: new Text("카카오페이 결제"),
       ),
       /* 웹뷰 로딩 컴포넌트 */
       initialChild: Container(

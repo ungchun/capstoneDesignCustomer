@@ -94,10 +94,10 @@ class _MyHomePageState extends State<MyHomePage> {
               // _showNotification();
             }
           }
-         _arry[indx++ % 2] = count;
-         if( _arry[indx % 2] != _arry[(indx + 1) % 2]){
-           _showNotification();
-         }
+          _arry[indx++ % 2] = count;
+          if (_arry[indx % 2] != _arry[(indx + 1) % 2] && indx > 2) {
+            _showNotification();
+          }
 
           return BottomNavigationBar(
             currentIndex:
@@ -146,8 +146,8 @@ class _MyHomePageState extends State<MyHomePage> {
 
     await _flutterLocalNotificationsPlugin.show(
       0,
-      '새로운 주문 안내',
-      '새로운 주문이 왔습니다.',
+      '제조완료',
+      '주문하신 메뉴가 제조 완료되었습니다.',
       detail,
       payload: '비카주',
     );
